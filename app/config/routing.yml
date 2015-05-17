@@ -1,0 +1,4 @@
+upmc_suivi_stagiaire:
+    resource: "@UpmcSuiviStagiaireBundle/Resources/config/routing.yml"
+    prefix:   /
+
