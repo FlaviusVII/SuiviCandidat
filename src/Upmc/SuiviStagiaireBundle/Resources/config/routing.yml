@@ -1,3 +1,6 @@
 upmc_suivi_stagiaire_accueil:
     path:     /
     defaults: { _controller: UpmcSuiviStagiaireBundle:Default:index }
+upmc_suivi_stagiaire_ajout_candidat:
+    path:     /ajoutCandidat
+    defaults: { _controller: UpmcSuiviStagiaireBundle:Candidat:ajoutCandidat }

@@ -16,9 +16,7 @@
     <body>
          <ul>
         {% block menu %}
-                <li>first</li>
-                <li>second</li>
-                <li>third</li>
+                <li><a href="{{ path('upmc_suivi_stagiaire_ajout_candidat') }}">Ajouter un candidat</a></li>
         {% endblock %}
         </ul>
         {% block body %}
