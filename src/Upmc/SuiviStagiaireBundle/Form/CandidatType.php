@@ -16,36 +16,109 @@ class CandidatType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('civilite', 'text', array(
+                ->add('civilite', 'choice', array(
                     'label' => 'Civilité',
+                    'choices' => array(
+                        'M' => 'Monsieur',
+                        'F' => 'Madame'
+                    )
+                   
+                ))
+                ->add('nomUsage', 'text', array(
+                    'label' => "Nom d'usage",
                     'constraints' => array(
-                        new Regex(array('pattern' => '/^[a-zA-Z\d][\s\da-zA-Zéêèùàçïöäë]{1,39}$/', "message" => "Le nom doit contenir au minimum 2 caractères. Les caractères spéciaux sont interdit. ")),
+                        new Regex(array(
+                            'pattern' => '/^[a-zA-Z\d][\s\da-zA-Zéêèùàçïöäë]{1,39}$/',
+                            "message" => "Le nom doit contenir au minimum 2 caractères. Les caractères spéciaux sont interdit. ")),
                     )
                 ))
-                ->add('nomUsage', 'text', array('label' => "Nom d'usage"))
-                ->add('nomPatronymique')
-                ->add('prenom', 'text', array('label' => 'Prénom'))
+                ->add('nomPatronymique', 'text', array(
+                    'constraints' => array(
+                        new Regex(array(
+                            'pattern' => '/^[a-zA-Z\d][\s\da-zA-Zéêèùàçïöäë]{0,39}$/',
+                            "message" => "Les caractères spéciaux sont interdit. ")),
+                    )
+                ))
+                ->add('prenom', 'text', array(
+                    'label' => 'Prénom',
+                    'constraints' => array(
+                        new Regex(array(
+                            'pattern' => '/^[a-zA-Z\d][\s\da-zA-Zéêèùàçïöäë]{1,39}$/',
+                            "message" => "Le prénom doit contenir au minimum 2 caractères. Les caractères spéciaux sont interdit. ")),
+                    )
+                ))
                 ->add('dateNaissance', 'date', array(
                     'label' => 'Date de naissance',
                     'years' => range(date('Y'), date('Y') - 95),
                     'format' => 'dd MM yyyy'
                 ))
-                ->add('departementNaissance', 'text', array('label' => 'Département de naissance'))
-                ->add('situationFamilliale')
-                ->add('nationalite', 'text', array('label' => 'Nationalité'))
+                ->add('departementNaissance', 'text', array(
+                    'label' => 'Département de naissance',
+                    'constraints' => array(
+                        new Regex(array(
+                            'pattern' => '/^[\d]{2}$/',
+                            "message" => "Le Département est un numéro de 2 chiffres"
+                                ))
+                    )
+                ))
+                ->add('situationFamilliale', 'choice', array(
+                    'label' => 'Situation familliale',
+                    'choices' => array(
+                        'Divorcé' => 'Divorcé',
+                        'Célibataire' => 'Célibataire',
+                        'Marié' => 'Marié(e)',
+                        'Paxé' => 'Paxé(e)'
+                    ),
+                    'constraints' => array(
+                        new Regex(array('pattern' => '/^[a-zA-Z\d][\s\da-zA-Zéêèùàçïöäë]{1,39}$/')),
+                    )
+                ))
+                ->add('nationalite', 'text', array(
+                    'label' => 'Nationalité',
+                    'constraints' => array(
+                        new Regex(array(
+                            'pattern' => '/^[a-zA-Z\d][\s\da-zA-Zéêèùàçïöäë]{1,39}$/',
+                            'message' => "Le nom doit contenir au minimum 2 caractères. Les caractères spéciaux sont interdit."
+                                ))
+                    )
+                ))
                 ->add('email', 'email', array(
                     'constraints' => array(
-                        new Email(array('message'=>'{{ value }}'))
+                        new Email(array('message' => '{{ value }}'))
                     )
                 ))
-                ->add('telephone', 'text', array('label' => 'Téléphone'))
-                ->add('adresse')
+                ->add('telephone', 'text', array(
+                    'label' => 'Téléphone',
+                    'constraints' => array(
+                        new Regex(array(
+                            'pattern' => '/^[\d]{8,10}$/',
+                            'message' => 'Le numéro de téléphone est constituer de 10 chiffres maximum'
+                                )),
+                    )
+                ))
+                ->add('adresse', 'text', array(
+                    'constraints' => array(
+                        new Regex(array(
+                            'pattern' => '/^[\d]{1,3}[\sa-zA-Zéêèùàçïöäë]{1,50}$/',
+                            "message" => "l'addresse ne comporte pas de caractère spéciaux"
+                                ))
+                    )
+                ))
                 ->add('codePostal', 'text', array(
                     'constraints' => array(
-                        new Regex(array('pattern' => '/^[\d]{5}$/', "message" => "Le code postal doit contenir au 5 chiffres")),
+                        new Regex(array(
+                            'pattern' => '/^[\d]{5}$/',
+                            "message" => "Le code postal doit contenir au 5 chiffres")),
                     )
                 ))
-                ->add('ville')
+                ->add('ville', 'text', array(
+                    'constraints' => array(
+                        new Regex(array(
+                            'pattern' => '/^[\sa-zA-Zéêèùàçïöäë]{1,50}$/',
+                            "message" => "la ville ne comporte pas de caractère spéciaux"
+                                ))
+                    )
+                ))
                 ->add('valider', 'submit')
         ;
     }

@@ -1,0 +1,32 @@
+{% block form_row %}
+    {% spaceless %}
+        <div class="form_row">
+            <p class="label">{{ form_label(form) }}
+                {% block field_label %}
+                    {% if required %}
+                        <span class="red" title="Champ obligatoire"> *</span>
+                    {% endif %}
+                {% endblock %}
+            </p>
+            <div class="widget">
+                {%- block form_widget -%}
+                {% if compound %}
+                    {{- block('form_widget_compound') -}}
+                {% else %}
+                    {{- block('form_widget_simple') -}}
+                {% endif %}
+                {%- endblock form_widget -%}
+
+            </div>
+        {% endspaceless %}
+    {% endblock form_row %}
+
+    {% block textarea_widget %}
+        {% spaceless %}
+            <div class="form_widget">
+                <div class="formErreur">{{ form_errors(form) }}</div>
+                <p class="label">{{ form_label(form) }}</p>
+                <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+            </div>
+        {% endspaceless %}
+    {% endblock %}    
