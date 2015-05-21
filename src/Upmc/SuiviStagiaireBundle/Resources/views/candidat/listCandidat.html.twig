@@ -1,0 +1,15 @@
+{% extends "UpmcSuiviStagiaireBundle:base:layout.html.twig" %}
+{% block title %}
+    Liste des candidats
+{% endblock %}
+{% block body %}
+    <table>
+    {% for candidat in candidats %}
+        <tr>
+            <td>{{ candidat.nomUsage }} {{ candidat.prenom }}</td>
+            <td><a href="{{ path('upmc_suivi_stagiaire_ajout_candidat') }}">Ajouter</a></td>
+            <td><a href="{{ path('upmc_suivi_stagiaire_modif_candidat', {id:candidat.id}) }}">Modifier</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

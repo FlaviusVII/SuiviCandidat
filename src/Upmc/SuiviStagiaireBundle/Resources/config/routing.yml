@@ -4,3 +4,9 @@ upmc_suivi_stagiaire_accueil:
 upmc_suivi_stagiaire_ajout_candidat:
     path:     /ajoutCandidat
     defaults: { _controller: UpmcSuiviStagiaireBundle:Candidat:ajoutCandidat }
+upmc_suivi_stagiaire_modif_candidat:
+    path:     /modifCandidat/{id}
+    defaults: { _controller: UpmcSuiviStagiaireBundle:Candidat:modifCandidat }
+upmc_suivi_stagiaire_list_candidat:
+    path:     /listCandidat
+    defaults: { _controller: UpmcSuiviStagiaireBundle:Candidat:listCandidat }
