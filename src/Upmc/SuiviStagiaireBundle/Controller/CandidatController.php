@@ -9,14 +9,14 @@ use Upmc\SuiviStagiaireBundle\Form\CandidatType;
 class CandidatController extends Controller {
 
     public function listCandidatAction() {
-         $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("\Upmc\SuiviStagiaireBundle\Entity\Candidat");
 
         $listCandidat = $repository->findAll();
 
         return $this->render('UpmcSuiviStagiaireBundle:candidat:listCandidat.html.twig', array('candidats' => $listCandidat));
     }
-    
+
     public function ajoutCandidatAction() {
         $candidat = new Candidat();
         $form = $this->createForm(new CandidatType(), $candidat);
@@ -28,7 +28,7 @@ class CandidatController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($candidat);
             $em->flush();
-            return $this->redirect($this->generateUrl('upmc_suivi_stagiaire_accueil'));
+            return $this->redirect($this->generateUrl('upmc_suivi_stagiaire_list_candidat'));
         }
 
         return $this->render('UpmcSuiviStagiaireBundle:candidat:ajoutCandidat.html.twig', array('form' => $form->createView()));
@@ -39,7 +39,7 @@ class CandidatController extends Controller {
         $repository = $em->getRepository("\Upmc\SuiviStagiaireBundle\Entity\Candidat");
 
         $candidat = $repository->find($id);
-        
+
         $form = $this->createForm(new CandidatType(), $candidat);
 
         $request = $this->getRequest();
@@ -49,10 +49,22 @@ class CandidatController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($candidat);
             $em->flush();
-            return $this->redirect($this->generateUrl('upmc_suivi_stagiaire_accueil'));
+            return $this->redirect($this->generateUrl('upmc_suivi_stagiaire_list_candidat'));
         }
 
-        return $this->render('UpmcSuiviStagiaireBundle:candidat:modifCandidat.html.twig', array('candidat' => $candidat));
+        return $this->render('UpmcSuiviStagiaireBundle:candidat:modifCandidat.html.twig', array('form' => $form->createView()));
+    }
+
+    public function supprimeCandidatAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("\Upmc\SuiviStagiaireBundle\Entity\Candidat");
+
+        $candidat = $repository->find($id);
+
+        $em->remove($candidat);
+        $em->flush();
+        
+        return $this->redirect($this->generateUrl('upmc_suivi_stagiaire_list_candidat'));
     }
 
 }
