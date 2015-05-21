@@ -3,7 +3,6 @@
 namespace Upmc\SuiviStagiaireBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * DossierSuiviPrestation
  *
@@ -49,7 +48,14 @@ class DossierSuiviPrestation
      */
     private $enseignant;
 
-
+    /**
+     * 
+     *
+     * @ORM\OneToOne(targetEntity="Candidat")
+     */
+    private $candidat;
+    
+    
     /**
      * Get id
      *
@@ -150,5 +156,28 @@ class DossierSuiviPrestation
     public function getEnseignant()
     {
         return $this->enseignant;
+    }
+    
+    /**
+     * Set candidat
+     *
+     * @param string $enseignant
+     * @return DossierSuiviPrestation
+     */
+    public function setCandidat($candidat)
+    {
+        $this->enseignant = $candidat;
+
+        return $this;
+    }
+
+    /**
+     * Get candidat
+     *
+     * @return string 
+     */
+    public function getCandidat()
+    {
+        return $this->candidat;
     }
 }
