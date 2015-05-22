@@ -100,7 +100,7 @@ class CandidatType extends AbstractType {
                     'constraints' => array(
                         new Regex(array(
                             'pattern' => '/^[\d]{1,3}[\sa-zA-Zéêèùàçïöäë]{1,50}$/',
-                            "message" => "l'addresse ne comporte pas de caractère spéciaux"
+                            "message" => "l'addresse doit commancer par un chiffre et ne comporte pas de caractère spéciaux"
                                 ))
                     )
                 ))
