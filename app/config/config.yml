@@ -31,7 +31,8 @@ twig:
     strict_variables: "%kernel.debug%"
     form:
         resources: 
-            #    -    'UpmcSuiviStagiaireBundle:form:fields.html.twig'
+#                -    'UpmcSuiviStagiaireBundle:form:date.html.twig'
+#                -    'UpmcSuiviStagiaireBundle:form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
