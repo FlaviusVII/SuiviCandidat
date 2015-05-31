@@ -13,3 +13,6 @@ upmc_suivi_stagiaire_list_candidat:
 upmc_suivi_stagiaire_supprime_candidat:
     path:     /supprimeCandidat/{id}
     defaults: { _controller: UpmcSuiviStagiaireBundle:Candidat:supprimeCandidat }
+upmc_suivi_stagiaire_processus_detail:
+    path:     /processusDetail/{id}
+    defaults: { _controller: UpmcSuiviStagiaireBundle:Default:process }

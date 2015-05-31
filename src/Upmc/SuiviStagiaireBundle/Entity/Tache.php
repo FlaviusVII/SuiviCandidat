@@ -3,6 +3,9 @@
 namespace Upmc\SuiviStagiaireBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Upmc\SuiviStagiaireBundle\Entity\PersonnelFc;
+use Upmc\SuiviStagiaireBundle\Entity\Processus;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Tache
@@ -22,24 +25,43 @@ class Tache
     private $id;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="processus", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Processus", inversedBy="taches")
      */
     private $processus;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="acteur", type="string", length=255)
-     */
-    private $acteur;
-
-    /**
+     * @ORM\ManyToMany(targetEntity="PersonnelFc")
+     * @ORM\JoinTable(name="ResponsablesTaches",
+     *      joinColumns={@ORM\JoinColumn(name="tache_id", referencedColumnName="id", unique=true)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="responsable_id", referencedColumnName="id")}
+     *      )
+     **/
+     
+    private $responsable;
+    
+        /**
      * @var string
      *
-     * @ORM\Column(name="suppleant", type="string", length=255)
-     */
+     * @ORM\ManyToMany(targetEntity="PersonnelFc")
+     * @ORM\JoinTable(name="Acteur_Taches",
+     *      joinColumns={@ORM\JoinColumn(name="tache_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="acteur_id", referencedColumnName="id")}
+     *      )
+     **/
+    private $acteur;
+
+      /**
+     * @var string
+     *
+     * @ORM\ManyToMany(targetEntity="PersonnelFc")
+     * @ORM\JoinTable(name="Suppleant_Taches",
+     *      joinColumns={@ORM\JoinColumn(name="tache_id", referencedColumnName="id", unique=true)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="suppleant_id", referencedColumnName="id")}
+     *      )
+     **/
     private $suppleant;
 
     /**
@@ -78,6 +100,17 @@ class Tache
     private $descriptif;
 
 
+ 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->responsable = new ArrayCollection();
+        $this->acteur = new ArrayCollection();
+        $this->suppleant = new ArrayCollection();
+    }
+
     /**
      * Get id
      *
@@ -86,75 +119,6 @@ class Tache
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set processus
-     *
-     * @param string $processus
-     * @return Tache
-     */
-    public function setProcessus($processus)
-    {
-        $this->processus = $processus;
-
-        return $this;
-    }
-
-    /**
-     * Get processus
-     *
-     * @return string 
-     */
-    public function getProcessus()
-    {
-        return $this->processus;
-    }
-
-    /**
-     * Set acteur
-     *
-     * @param string $acteur
-     * @return Tache
-     */
-    public function setActeur($acteur)
-    {
-        $this->acteur = $acteur;
-
-        return $this;
-    }
-
-    /**
-     * Get acteur
-     *
-     * @return string 
-     */
-    public function getActeur()
-    {
-        return $this->acteur;
-    }
-
-    /**
-     * Set suppleant
-     *
-     * @param string $suppleant
-     * @return Tache
-     */
-    public function setSuppleant($suppleant)
-    {
-        $this->suppleant = $suppleant;
-
-        return $this;
-    }
-
-    /**
-     * Get suppleant
-     *
-     * @return string 
-     */
-    public function getSuppleant()
-    {
-        return $this->suppleant;
     }
 
     /**
@@ -270,5 +234,127 @@ class Tache
     public function getDescriptif()
     {
         return $this->descriptif;
+    }
+
+    /**
+     * Set processus
+     *
+     * @param \Upmc\SuiviStagiaireBundle\Entity\Processus $processus
+     * @return Tache
+     */
+    public function setProcessus(Processus $processus = null)
+    {
+        $this->processus = $processus;
+
+        return $this;
+    }
+
+    /**
+     * Get processus
+     *
+     * @return \Upmc\SuiviStagiaireBundle\Entity\Processus 
+     */
+    public function getProcessus()
+    {
+        return $this->processus;
+    }
+
+    /**
+     * Add responsable
+     *
+     * @param \Upmc\SuiviStagiaireBundle\Entity\PersonnelFc $responsable
+     * @return Tache
+     */
+    public function addResponsable(PersonnelFc $responsable)
+    {
+        $this->responsable[] = $responsable;
+
+        return $this;
+    }
+
+    /**
+     * Remove responsable
+     *
+     * @param \Upmc\SuiviStagiaireBundle\Entity\PersonnelFc $responsable
+     */
+    public function removeResponsable(PersonnelFc $responsable)
+    {
+        $this->responsable->removeElement($responsable);
+    }
+
+    /**
+     * Get responsable
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getResponsable()
+    {
+        return $this->responsable;
+    }
+
+    /**
+     * Add acteur
+     *
+     * @param \Upmc\SuiviStagiaireBundle\Entity\PersonnelFc $acteur
+     * @return Tache
+     */
+    public function addActeur(PersonnelFc $acteur)
+    {
+        $this->acteur[] = $acteur;
+
+        return $this;
+    }
+
+    /**
+     * Remove acteur
+     *
+     * @param \Upmc\SuiviStagiaireBundle\Entity\PersonnelFc $acteur
+     */
+    public function removeActeur(PersonnelFc $acteur)
+    {
+        $this->acteur->removeElement($acteur);
+    }
+
+    /**
+     * Get acteur
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getActeur()
+    {
+        return $this->acteur;
+    }
+
+    /**
+     * Add suppleant
+     *
+     * @param \Upmc\SuiviStagiaireBundle\Entity\PersonnelFc $suppleant
+     * @return Tache
+     */
+    public function addSuppleant(PersonnelFc $suppleant)
+    {
+        $this->suppleant[] = $suppleant;
+
+        return $this;
+    }
+
+    /**
+     * Remove suppleant
+     *
+     * @param \Upmc\SuiviStagiaireBundle\Entity\PersonnelFc $suppleant
+     */
+    public function removeSuppleant(PersonnelFc $suppleant)
+    {
+        $this->suppleant->removeElement($suppleant);
+    }
+
+    /**
+     * Get suppleant
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSuppleant()
+    {
+        return $this->suppleant;
     }
 }
